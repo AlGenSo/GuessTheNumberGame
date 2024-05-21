@@ -1,4 +1,4 @@
-** GuessTheNumberGame **
+**GuessTheNumberGame**
 
 Домашнее задание: Демонстрация SOLID принципов
 
