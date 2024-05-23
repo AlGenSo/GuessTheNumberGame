@@ -7,7 +7,7 @@ namespace GuessTheNumberGame
         static void Main()
         {
             var LogicGuessNumberGame = new LogicGuessNumberGame();
-            LogicGuessNumberGame.GuessNumberGame();
+            LogicGuessNumberGame.StartGame();
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using GuessTheNumberGame.Classes;
+using GuessTheNumberGame.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -8,60 +10,83 @@ using System.Threading.Tasks;
 
 namespace GuessTheNumberGame.Classes
 {
-    internal class LogicGuessNumberGame
+    internal class LogicGuessNumberGame : ILogicGame
     {
-        public static void GuessNumberGame()
+        private static IRandomize _randomize;
+        private static IReadConsole _readConsole;
+        private static IWriteConsole _writeConsole;
+        private static IValidate _validate;
+        private static ISettings _settings;
+
+        public void LogicGuessNumberGame_ILogic(
+            IRandomize randomize,
+            IReadConsole readConsole,
+            IWriteConsole writeConsole,
+            IValidate validate,
+            ISettings settings
+            )
         {
-            var settings = new Settings();
-            var consoleReader = new ConsoleReader();
-            var textValidator = new TextValidator();
-            var getRandomNumberByRange = new GetRandomNumberByRange();
-            var consoleWriter = new ConsoleWriter();
-            int PCNumber;
-            int UserNumber;
-            string UserAnswer;
-            int UserAttempts = 0;
-            string TextVariant;
+            _randomize = randomize;
+            _readConsole = readConsole;
+            _writeConsole = writeConsole;
+            _validate = validate;
+            _settings = settings;
+        }
 
-            PCNumber = getRandomNumberByRange.RandomNumber(settings.MinValue, settings.MaxValue);
+        public void StartGame()
+        {
+            int pcNumber;
+            int userNumber;
+            string userAnswer;
+            int userAttempts = 0;
+            string textVariant;
 
-            consoleWriter.WriteToConsole("Начало игры \"Угадай число\". Попробуй угадать число, которое я загадал.");
-            consoleWriter.WriteToConsole($"Число лежит в диапазоне от {settings.MinValue} до {settings.MaxValue}.");
-            consoleWriter.WriteToConsole($"Количество попыток: {settings.MaxAttempts}");
+            _randomize = new GetRandomNumberByRange();
+            _readConsole = new ConsoleReader();
+            _writeConsole = new ConsoleWriter();
+            _validate = new TextValidator();
+            _settings = new Settings();
 
-            while (UserAttempts < settings.MaxAttempts)
+
+            pcNumber = _randomize.RandomNumber(_settings.MinValue, _settings.MaxValue);
+
+            _writeConsole.WriteToConsole("Начало игры \"Угадай число\". Попробуй угадать число, которое я загадал.");
+            _writeConsole.WriteToConsole($"Число лежит в диапазоне от {_settings.MinValue} до {_settings.MaxValue}.");
+            _writeConsole.WriteToConsole($"Количество попыток: {_settings.MaxAttempts}");
+
+            while (userAttempts < _settings.MaxAttempts)
             {
-                consoleWriter.WriteToConsole("Напиши число");
+                _writeConsole.WriteToConsole("Напиши число");
 
-                UserAnswer = consoleReader.Read();
+                userAnswer = _readConsole.Read();
 
-                if (!textValidator.IsConvertableToInt(UserAnswer))
+                if (!_validate.IsConvertableToInt(userAnswer))
                 {
-                    consoleWriter.WriteToConsole("Необходимо ввести число");
+                    _writeConsole.WriteToConsole("Необходимо ввести число");
                 }
                 else
                 {
-                    UserNumber = Int32.Parse(UserAnswer);
+                    userNumber = Int32.Parse(userAnswer);
 
-                    UserAttempts++;
+                    userAttempts++;
 
-                    if (PCNumber == UserNumber)
+                    if (pcNumber == userNumber)
                     {
-                        consoleWriter.WriteToConsole("Угадал!");
+                        _writeConsole.WriteToConsole("Угадал!");
                         break;
                     }
                     else
                     {
-                        if (PCNumber < UserNumber)
+                        if (pcNumber < userNumber)
                         {
-                            TextVariant = "меньше";
+                            textVariant = "меньше";
                         }
                         else
                         {
-                            TextVariant = "больше";
+                            textVariant = "больше";
                         }
-                        consoleWriter.WriteToConsole($"Не угадал. Загаданное число {TextVariant}.");
-                        consoleWriter.WriteToConsole($"Осталось попыток: {settings.MaxAttempts - UserAttempts}.");
+                        _writeConsole.WriteToConsole($"Не угадал. Загаданное число {textVariant}.");
+                        _writeConsole.WriteToConsole($"Осталось попыток: {_settings.MaxAttempts - userAttempts}.");
                     }
                 }
 
