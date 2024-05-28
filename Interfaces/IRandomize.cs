@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GuessTheNumberGame.Interfaces
 {
-    internal interface IRandomize
+    public interface IRandomize
     {
         int RandomNumber(int minValue, int maxValue);
     }

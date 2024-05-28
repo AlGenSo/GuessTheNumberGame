@@ -1,30 +1,22 @@
-﻿using GuessTheNumberGame.Classes;
-using GuessTheNumberGame.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GuessTheNumberGame.Interfaces;
+
 
 namespace GuessTheNumberGame.Classes
 {
-    internal class LogicGuessNumberGame : ILogicGame
+    public class LogicGuessNumberGame : ILogicGame
     {
-        private static IRandomize _randomize;
-        private static IReadConsole _readConsole;
-        private static IWriteConsole _writeConsole;
-        private static IValidate _validate;
-        private static ISettings _settings;
+        private readonly IRandomize _randomize;
+        private readonly IReadConsole _readConsole;
+        private readonly IWriteConsole _writeConsole;
+        private readonly IValidate _validate;
+        private readonly ISettings _settings;
 
-        public void LogicGuessNumberGame_ILogic(
+        public LogicGuessNumberGame(
             IRandomize randomize,
             IReadConsole readConsole,
             IWriteConsole writeConsole,
             IValidate validate,
-            ISettings settings
-            )
+            ISettings settings)
         {
             _randomize = randomize;
             _readConsole = readConsole;
@@ -40,13 +32,6 @@ namespace GuessTheNumberGame.Classes
             string userAnswer;
             int userAttempts = 0;
             string textVariant;
-
-            _randomize = new GetRandomNumberByRange();
-            _readConsole = new ConsoleReader();
-            _writeConsole = new ConsoleWriter();
-            _validate = new TextValidator();
-            _settings = new Settings();
-
 
             pcNumber = _randomize.RandomNumber(_settings.MinValue, _settings.MaxValue);
 
@@ -90,8 +75,8 @@ namespace GuessTheNumberGame.Classes
                     }
                 }
 
-
             }
         }
+        
     }
 }

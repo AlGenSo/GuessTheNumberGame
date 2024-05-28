@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GuessTheNumberGame.Interfaces
 {
-    internal interface IWriteConsole
+    public interface IWriteConsole
     {
         void WriteToConsole(string text);
     }

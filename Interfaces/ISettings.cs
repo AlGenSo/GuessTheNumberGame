@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GuessTheNumberGame.Interfaces
 {
-    internal interface ISettings
+    public interface ISettings
     {
         public int MinValue { get; init; }
         public int MaxValue { get; init; }

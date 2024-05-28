@@ -2,12 +2,17 @@
 
 namespace GuessTheNumberGame
 {
-    internal static class Program
+    public static class Program
     {
         static void Main()
         {
-            var LogicGuessNumberGame = new LogicGuessNumberGame();
-            LogicGuessNumberGame.StartGame();
+            LogicGuessNumberGame logicGuessNumberGame = new LogicGuessNumberGame(
+                new GetRandomNumberByRange(),
+                new ConsoleReader(),
+                new ConsoleWriter(),
+                new TextValidator(),
+                new Settings());
+            logicGuessNumberGame.StartGame();
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GuessTheNumberGame.Interfaces
 {
-    internal interface IReadConsole
+    public interface IReadConsole
     {
         string Read();
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GuessTheNumberGame.Interfaces
 {
-    internal interface IValidate
+    public interface IValidate
     {
         bool IsConvertableToInt(string text);
     }
